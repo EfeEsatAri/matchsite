@@ -1,0 +1,155 @@
+﻿@model List<ResultMatchEventDto>
+@{
+    ViewData["Title"] = "Maç Etkinlikleri";
+    Layout = "~/Views/Admin/Index.cshtml";
+    int count = 0;
+}
+
+<style>
+    .matchmind-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+        color: #333;
+    }
+
+    .matchmind-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .matchmind-header h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #111;
+        }
+
+    .mm-btn-primary {
+        background-color: #0f5132;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .mm-table-wrapper {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+    }
+
+    .mm-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+        .mm-table th {
+            background-color: #f8f9fa;
+            color: #555;
+            font-weight: 600;
+            padding: 14px 12px;
+            border-bottom: 2px solid #dee2e6;
+            font-size: 13px;
+        }
+
+        .mm-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .mm-table tbody tr:hover {
+            background-color: #fdfdfd;
+        }
+
+    .mm-badge-minute {
+        background-color: #e2e3e5;
+        color: #333;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .mm-btn-action {
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 13px;
+        margin-right: 5px;
+        display: inline-block;
+    }
+
+    .mm-btn-edit {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .mm-btn-delete {
+        background-color: #dc3545;
+        color: #fff;
+    }
+</style>
+
+<div class="matchmind-container">
+    <div class="matchmind-header">
+        <h3>Maç Canlı Etkinlik Kayıtları</h3>
+        <a href="/AdminMatchEvent/CreateMatchEvent" class="mm-btn-primary">Yeni Etkinlik Gir</a>
+    </div>
+
+    <div class="mm-table-wrapper">
+        <table class="mm-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 8%">Dakika</th>
+                    <th style="width: 15%">Takım</th>
+                    <th style="width: 15%">Olay Türü</th>
+                    <th style="width: 18%">Oyuncu</th>
+                    <th style="width: 18%">İlişkili Oyuncu</th>
+                    <th style="width: 21%">Açıklama</th>
+                    <th style="width: 15%">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td><strong>@count</strong></td>
+                            <td>
+                                <span class="mm-badge-minute">
+                                    @item.Minute' @(item.ExtraTime.HasValue && item.ExtraTime > 0 ? "+" + item.ExtraTime : "")
+                                </span>
+                            </td>
+                            <td style="font-weight: 600;">@item.TeamName</td>
+                            <td><span style="font-weight: 500;">@item.EventTypeName</span></td>
+                            <td>@(string.IsNullOrEmpty(item.PlayerFullName) ? "-" : item.PlayerFullName)</td>
+                            <td>@(string.IsNullOrEmpty(item.RelatedPlayerFullName) ? "-" : item.RelatedPlayerFullName)</td>
+                            <td style="font-style: italic; color: #555;">@item.Description</td>
+                            <td>
+                                <a href="/AdminMatchEvent/UpdateMatchEvent/@item.MatchEventId" class="mm-btn-action mm-btn-edit">Güncelle</a>
+                                <a href="/AdminMatchEvent/DeleteMatchEvent/@item.MatchEventId" class="mm-btn-action mm-btn-delete" onclick="return confirm('Bu etkinlik kaydını silmek istediğinize emin misiniz?')">Sil</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #777; padding: 30px;">Henüz hiçbir maç içi etkinlik (gol, kart vb.) kaydedilmemiş.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

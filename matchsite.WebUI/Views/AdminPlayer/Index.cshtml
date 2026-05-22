@@ -1,0 +1,211 @@
+﻿@model List<ResultPlayerDto>
+@{
+    ViewData["Title"] = "Oyuncu Listesi";
+    Layout = "~/Views/Admin/Index.cshtml";
+
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int count = (currentPage - 1) * 10;
+}
+
+<style>
+    .matchmind-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+        color: #333;
+    }
+
+    .matchmind-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .matchmind-header h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #111;
+        }
+
+    .mm-btn-primary {
+        background-color: #0f5132; /* Temandaki yeşil tonuna yakın */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .mm-table-wrapper {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+    }
+
+    .mm-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+        .mm-table th {
+            background-color: #f8f9fa;
+            color: #555;
+            font-weight: 600;
+            padding: 14px 16px;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .mm-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+
+        .mm-table tbody tr:hover {
+            background-color: #fdfdfd;
+        }
+
+    .mm-badge {
+        background-color: #e2e3e5;
+        color: #383d41;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .mm-badge-team {
+        background-color: #d1e7dd;
+        color: #0f5132;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+
+    .mm-btn-action {
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 13px;
+        margin-right: 5px;
+        display: inline-block;
+    }
+
+    .mm-btn-edit {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .mm-btn-delete {
+        background-color: #dc3545;
+        color: #fff;
+    }
+    /* Sayfalama Tasarımı */
+    .mm-pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        margin-top: 25px;
+    }
+
+    .mm-page-item {
+        margin: 0 3px;
+    }
+
+    .mm-page-link {
+        display: block;
+        padding: 8px 14px;
+        border: 1px solid #dee2e6;
+        color: #0f5132;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+
+    .mm-page-item.active .mm-page-link {
+        background-color: #0f5132;
+        color: white;
+        border-color: #0f5132;
+    }
+
+    .mm-page-item.disabled .mm-page-link {
+        color: #6c757d;
+        pointer-events: none;
+        background-color: #fff;
+        border-color: #dee2e6;
+    }
+</style>
+
+<div class="matchmind-container">
+    <div class="matchmind-header">
+        <h3>Oyuncu Listesi</h3>
+        <a href="/AdminPlayer/CreatePlayer" class="mm-btn-primary">Yeni Oyuncu Ekle</a>
+    </div>
+
+    <div class="mm-table-wrapper">
+        <table class="mm-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 30%">Ad Soyad</th>
+                    <th style="width: 10%">Numara</th>
+                    <th style="width: 20%">Pozisyon</th>
+                    <th style="width: 20%">Takım</th>
+                    <th style="width: 15%; text-align: center;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td><strong>@count</strong></td>
+                            <td style="font-weight: 500;">@item.FullName</td>
+                            <td><span class="mm-badge">@item.Number</span></td>
+                            <td>@item.Position</td>
+                            <td><span class="mm-badge-team">@item.TeamName</span></td>
+                            <td style="text-align: center;">
+                                <a href="/AdminPlayer/UpdatePlayer/@item.PlayerId" class="mm-btn-action mm-btn-edit">Güncelle</a>
+                                <a href="/AdminPlayer/DeletePlayer/@item.PlayerId" class="mm-btn-action mm-btn-delete" onclick="return confirm('Silmek istediğine emin misin?')">Sil</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #777; padding: 30px;">Kayıtlı oyuncu bulunamadı.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (totalPages > 1)
+    {
+        <ul class="mm-pagination">
+            @* Önceki Butonu *@
+            <li class="mm-page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="mm-page-link" href="/AdminPlayer/Index?page=@(currentPage - 1)">Önceki</a>
+            </li>
+
+            @* Sadece Aktif Olan Sayfa Numarası *@
+            <li class="mm-page-item active">
+                <span class="mm-page-link">@currentPage</span>
+            </li>
+
+            @* Sonraki Butonu *@
+            <li class="mm-page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="mm-page-link" href="/AdminPlayer/Index?page=@(currentPage + 1)">Sonraki</a>
+            </li>
+        </ul>
+    }
+</div>

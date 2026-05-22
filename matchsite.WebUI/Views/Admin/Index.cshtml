@@ -1,0 +1,908 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+    @await Component.InvokeAsync("_AdminHeadComponentPartial")
+
+<body>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0d3320" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 2 L8 7 L12 12 L16 7 Z M2 12 L7 8 L12 12 L7 16 Z M22 12 L17 16 L12 12 L17 8 Z M12 22 L16 17 L12 12 L8 17 Z" />
+                </svg>
+            </div>
+            <span class="logo-text">MatchMind</span>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-label">Ana Menü</div>
+
+            <a class="nav-item" href="/Admin/Dashboard">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
+                Dashboard
+            </a>
+
+            <a class="nav-item" href="/AdminStanding/Index">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6l4-4 4 4" /><path d="M12 2v10.3" /><path d="M8 14H4a2 2 0 0 0-2 2v4" /><path d="M16 14h4a2 2 0 0 1 2 2v4" /><path d="M12 12v10" /></svg>
+                Puan Durumu
+            </a>
+
+            <a class="nav-item" href="/AdminTeams/Index">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                Takım Yönetimi
+            </a>
+
+            <a class="nav-item" href="/AdminPlayer/Index">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
+                Oyuncu Yönetimi
+            </a>
+
+            <a class="nav-item" href="/AdminMatches/Index">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                Maç Yönetimi
+            </a>
+
+            <div class="sidebar-section-label" style="margin-top: 15px;">Canlı Maç Yönetimi</div>
+
+            <a class="nav-item" href="/AdminMatchEventType/Index">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" /><line x1="7" y1="7" x2="7.01" y2="7" /></svg>
+                Etkinlik Türleri
+            </a>
+
+            <a class="nav-item" href="/AdminMatchEvent/Index">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+                Canlı Olay Kayıtları
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar">E A</div>
+                <div class="user-info">
+                    <div class="user-name">Efe Esat Arı</div>
+                    <div class="user-role">Süper Admin</div>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(245,248,242,0.4)" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+        <!-- HEADER -->
+        <header>
+            <button class="header-burger" onclick="toggleSidebar()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+            </button>
+            <div>
+                <div class="header-breadcrumb"><span>FootballAdmin</span></div>
+            </div>
+            <div class="header-actions">
+                <div class="header-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+                    <div class="notif-dot"></div>
+                </div>
+                <div class="header-avatar">E A</div>
+            </div>
+        </header>
+		@RenderBody()
+        <!-- CONTENT -->
+        @* <div class="content">
+
+            <!-- ===== DASHBOARD PAGE ===== -->
+            <div class="page active" id="page-dashboard">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>⚽ İyi günler, Yönetici!</h1>
+                        <p>İşte bu haftanın lig özeti</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="showPage('fixtures')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                        Maç Ekle
+                    </button>
+                </div>
+
+                <!-- Stat Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card green">
+                        <div class="stat-icon green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                        </div>
+                        <div class="stat-label">Toplam Takım</div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-change up">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></svg>
+                            Bu sezon 2 yeni takım
+                        </div>
+                    </div>
+                    <div class="stat-card teal">
+                        <div class="stat-icon teal">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
+                        </div>
+                        <div class="stat-label">Toplam Oyuncu</div>
+                        <div class="stat-value">142</div>
+                        <div class="stat-change up">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></svg>
+                            +12 bu ay
+                        </div>
+                    </div>
+                    <div class="stat-card amber">
+                        <div class="stat-icon amber">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                        </div>
+                        <div class="stat-label">Oynanan Maç</div>
+                        <div class="stat-value">56</div>
+                        <div class="stat-change">28 hafta × 4 maç/hafta</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-icon purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+                        </div>
+                        <div class="stat-label">Toplam Gol</div>
+                        <div class="stat-value">183</div>
+                        <div class="stat-change up">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></svg>
+                            Maç başı ort. 3.27
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts + Recent Matches -->
+                <div class="grid-3-1">
+                    <!-- Chart -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Haftalık Gol İstatistikleri</div>
+                                <div class="card-subtitle">Son 8 hafta</div>
+                            </div>
+                            <div class="card-badge">Sezon 2024/25</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="goalChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Matches -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Son Maçlar</div>
+                            <button class="btn btn-outline btn-sm" onclick="showPage('fixtures')">Tümü</button>
+                        </div>
+                        <div class="card-body" style="padding-top:8px;">
+                            <div class="match-item">
+                                <div class="team-badge" style="background:#e8f5ed;color:#065f2a">GS</div>
+                                <div class="match-teams">Galatasaray <span style="color:var(--text-muted);font-weight:400">vs</span> Beşiktaş</div>
+                                <div class="match-score">3 – 1</div>
+                                <div class="match-meta">
+                                    <div class="date">15 Nis</div>
+                                    <span class="match-status status-done">Bitti</span>
+                                </div>
+                            </div>
+                            <div class="match-item">
+                                <div class="team-badge" style="background:#fef2f2;color:#991b1b">FB</div>
+                                <div class="match-teams">Fenerbahçe <span style="color:var(--text-muted);font-weight:400">vs</span> Trabzon</div>
+                                <div class="match-score" style="color:var(--danger);border-color:#ffd0d0">2 – 2</div>
+                                <div class="match-meta">
+                                    <div class="date">14 Nis</div>
+                                    <span class="match-status status-done">Bitti</span>
+                                </div>
+                            </div>
+                            <div class="match-item">
+                                <div class="team-badge" style="background:#eff6ff;color:#1e40af">BJK</div>
+                                <div class="match-teams">Beşiktaş <span style="color:var(--text-muted);font-weight:400">vs</span> Antalya</div>
+                                <div class="match-score">— – —</div>
+                                <div class="match-meta">
+                                    <div class="date">18 Nis</div>
+                                    <span class="match-status status-upcoming">Yakında</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Standings + Top Scorers -->
+                <div class="grid-2">
+                    <!-- Standings -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Puan Durumu</div>
+                                <div class="card-subtitle">2024/25 Sezonu</div>
+                            </div>
+                            <button class="btn btn-outline btn-sm" onclick="showPage('standings')">Tümü</button>
+                        </div>
+                        <div class="card-body" style="padding: 0 0 4px;">
+                            <table class="standings-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Takım</th>
+                                        <th class="center">O</th>
+                                        <th class="center">G</th>
+                                        <th class="center">B</th>
+                                        <th class="center">M</th>
+                                        <th class="center">Puan</th>
+                                        <th>Form</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="team-rank top">1</span></td>
+                                        <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e8f5ed;color:#065f2a">GS</div>Galatasaray</div></td>
+                                        <td class="center">28</td>
+                                        <td class="center">19</td>
+                                        <td class="center">5</td>
+                                        <td class="center">4</td>
+                                        <td class="center"><span class="pts-badge">62</span></td>
+                                        <td><div class="form-dots"><div class="dot w"></div><div class="dot w"></div><div class="dot w"></div><div class="dot d"></div><div class="dot w"></div></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="team-rank top">2</span></td>
+                                        <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fef2f2;color:#991b1b">FB</div>Fenerbahçe</div></td>
+                                        <td class="center">28</td>
+                                        <td class="center">18</td>
+                                        <td class="center">5</td>
+                                        <td class="center">5</td>
+                                        <td class="center"><span class="pts-badge">59</span></td>
+                                        <td><div class="form-dots"><div class="dot w"></div><div class="dot d"></div><div class="dot w"></div><div class="dot w"></div><div class="dot d"></div></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="team-rank">3</span></td>
+                                        <td><div class="table-cell-flex"><div class="table-avatar" style="background:#f0ecfd;color:#5b21b6">BJK</div>Beşiktaş</div></td>
+                                        <td class="center">28</td>
+                                        <td class="center">14</td>
+                                        <td class="center">6</td>
+                                        <td class="center">8</td>
+                                        <td class="center"><span class="pts-badge" style="color:#7c3aed">48</span></td>
+                                        <td><div class="form-dots"><div class="dot l"></div><div class="dot w"></div><div class="dot w"></div><div class="dot l"></div><div class="dot w"></div></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="team-rank">4</span></td>
+                                        <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fffbeb;color:#92400e">TS</div>Trabzonspor</div></td>
+                                        <td class="center">28</td>
+                                        <td class="center">13</td>
+                                        <td class="center">7</td>
+                                        <td class="center">8</td>
+                                        <td class="center"><span class="pts-badge" style="color:#d97706">46</span></td>
+                                        <td><div class="form-dots"><div class="dot w"></div><div class="dot l"></div><div class="dot d"></div><div class="dot w"></div><div class="dot d"></div></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Top Scorers -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">En Çok Gol Atanlar</div>
+                            <span class="card-badge">Top 5</span>
+                        </div>
+                        <div class="card-body" style="padding-top: 8px;">
+                            <div class="scorer-item">
+                                <div class="scorer-rank gold">1</div>
+                                <div class="scorer-avatar" style="background:#e8f5ed;color:#065f2a">MO</div>
+                                <div class="scorer-info"><div class="scorer-name">Mauro Osorio</div><div class="scorer-team">Galatasaray</div></div>
+                                <div class="scorer-goals">22</div>
+                            </div>
+                            <div class="scorer-item">
+                                <div class="scorer-rank gold" style="color:#9ca3af">2</div>
+                                <div class="scorer-avatar" style="background:#fef2f2;color:#991b1b">EJ</div>
+                                <div class="scorer-info"><div class="scorer-name">Edin Džeko</div><div class="scorer-team">Fenerbahçe</div></div>
+                                <div class="scorer-goals">19</div>
+                            </div>
+                            <div class="scorer-item">
+                                <div class="scorer-rank">3</div>
+                                <div class="scorer-avatar" style="background:#fffbeb;color:#92400e">PV</div>
+                                <div class="scorer-info"><div class="scorer-name">Pepe Velasquez</div><div class="scorer-team">Trabzonspor</div></div>
+                                <div class="scorer-goals">16</div>
+                            </div>
+                            <div class="scorer-item">
+                                <div class="scorer-rank">4</div>
+                                <div class="scorer-avatar" style="background:#eff6ff;color:#1e40af">KH</div>
+                                <div class="scorer-info"><div class="scorer-name">Kemal Hüseyin</div><div class="scorer-team">Beşiktaş</div></div>
+                                <div class="scorer-goals">14</div>
+                            </div>
+                            <div class="scorer-item">
+                                <div class="scorer-rank">5</div>
+                                <div class="scorer-avatar" style="background:#f0ecfd;color:#5b21b6">RB</div>
+                                <div class="scorer-info"><div class="scorer-name">Remo Balaci</div><div class="scorer-team">Galatasaray</div></div>
+                                <div class="scorer-goals">13</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Win/Draw/Loss Chart -->
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Maç Sonuçları Dağılımı</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="resultChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Takım Gol Dağılımı</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="teamGoalChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== TEAMS PAGE ===== -->
+            <div class="page" id="page-teams">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>Takım Yönetimi</h1>
+                        <p>8 aktif takım kayıtlı</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('teamModal')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                        Yeni Takım
+                    </button>
+                </div>
+                <div class="toolbar">
+                    <input class="search-input" type="text" placeholder="Takım ara...">
+                    <select class="filter-select"><option>Tüm Şehirler</option><option>İstanbul</option><option>Trabzon</option><option>Ankara</option></select>
+                    <select class="filter-select"><option>Tüm Durumlar</option><option>Aktif</option><option>Pasif</option></select>
+                </div>
+                <div class="card">
+                    <div class="data-table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Takım</th>
+                                    <th>Şehir</th>
+                                    <th>Oyuncu</th>
+                                    <th>Kuruluş</th>
+                                    <th>Renk</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e8f5ed;color:#065f2a">GS</div><div><div class="table-name">Galatasaray</div><div class="table-sub">Super Lig</div></div></div></td>
+                                    <td>İstanbul</td>
+                                    <td>22</td>
+                                    <td>1905</td>
+                                    <td><div style="display:flex;gap:4px"><div style="width:16px;height:16px;border-radius:4px;background:#e8251a"></div><div style="width:16px;height:16px;border-radius:4px;background:#f7b00d"></div></div></td>
+                                    <td><span class="pill active">Aktif</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('teamModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fef2f2;color:#991b1b">FB</div><div><div class="table-name">Fenerbahçe</div><div class="table-sub">Super Lig</div></div></div></td>
+                                    <td>İstanbul</td>
+                                    <td>24</td>
+                                    <td>1907</td>
+                                    <td><div style="display:flex;gap:4px"><div style="width:16px;height:16px;border-radius:4px;background:#003f8c"></div><div style="width:16px;height:16px;border-radius:4px;background:#f9d700"></div></div></td>
+                                    <td><span class="pill active">Aktif</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('teamModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#f0ecfd;color:#5b21b6">BJK</div><div><div class="table-name">Beşiktaş</div><div class="table-sub">Super Lig</div></div></div></td>
+                                    <td>İstanbul</td>
+                                    <td>22</td>
+                                    <td>1903</td>
+                                    <td><div style="display:flex;gap:4px"><div style="width:16px;height:16px;border-radius:4px;background:#1a1a1a"></div><div style="width:16px;height:16px;border-radius:4px;background:#f5f5f5;border:1px solid #ddd"></div></div></td>
+                                    <td><span class="pill active">Aktif</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('teamModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fffbeb;color:#92400e">TS</div><div><div class="table-name">Trabzonspor</div><div class="table-sub">Super Lig</div></div></div></td>
+                                    <td>Trabzon</td>
+                                    <td>20</td>
+                                    <td>1967</td>
+                                    <td><div style="display:flex;gap:4px"><div style="width:16px;height:16px;border-radius:4px;background:#c41f1f"></div><div style="width:16px;height:16px;border-radius:4px;background:#1a6bbf"></div></div></td>
+                                    <td><span class="pill active">Aktif</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('teamModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e0f5f9;color:#0e7490">AFK</div><div><div class="table-name">Antalyaspor</div><div class="table-sub">Super Lig</div></div></div></td>
+                                    <td>Antalya</td>
+                                    <td>19</td>
+                                    <td>1966</td>
+                                    <td><div style="display:flex;gap:4px"><div style="width:16px;height:16px;border-radius:4px;background:#e8251a"></div><div style="width:16px;height:16px;border-radius:4px;background:#ffffff;border:1px solid #ddd"></div></div></td>
+                                    <td><span class="pill inactive">Pasif</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('teamModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== PLAYERS PAGE ===== -->
+            <div class="page" id="page-players">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>Oyuncu Yönetimi</h1>
+                        <p>142 kayıtlı oyuncu</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('playerModal')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                        Yeni Oyuncu
+                    </button>
+                </div>
+                <div class="toolbar">
+                    <input class="search-input" type="text" placeholder="Oyuncu ara...">
+                    <select class="filter-select"><option>Tüm Mevkiler</option><option>Kaleci</option><option>Defans</option><option>Orta Saha</option><option>Forvet</option></select>
+                    <select class="filter-select"><option>Tüm Takımlar</option><option>Galatasaray</option><option>Fenerbahçe</option><option>Beşiktaş</option></select>
+                </div>
+                <div class="card">
+                    <div class="data-table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Oyuncu</th>
+                                    <th>Takım</th>
+                                    <th>Mevki</th>
+                                    <th>Yaş</th>
+                                    <th>Uyruk</th>
+                                    <th>Maç</th>
+                                    <th>Gol</th>
+                                    <th>Asist</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e8f5ed;color:#065f2a">MO</div><div><div class="table-name">Mauro Osorio</div><div class="table-sub">#9</div></div></div></td>
+                                    <td>Galatasaray</td>
+                                    <td><span class="pill fwd">Forvet</span></td>
+                                    <td>27</td>
+                                    <td>🇧🇷 BRA</td>
+                                    <td>26</td>
+                                    <td>22</td>
+                                    <td>8</td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('playerModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fef2f2;color:#991b1b">EJ</div><div><div class="table-name">Edin Džeko</div><div class="table-sub">#9</div></div></div></td>
+                                    <td>Fenerbahçe</td>
+                                    <td><span class="pill fwd">Forvet</span></td>
+                                    <td>37</td>
+                                    <td>🇧🇦 BIH</td>
+                                    <td>25</td>
+                                    <td>19</td>
+                                    <td>5</td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('playerModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#eff6ff;color:#1e40af">YY</div><div><div class="table-name">Yusuf Yazıcı</div><div class="table-sub">#10</div></div></div></td>
+                                    <td>Trabzonspor</td>
+                                    <td><span class="pill mid">Orta Saha</span></td>
+                                    <td>26</td>
+                                    <td>🇹🇷 TUR</td>
+                                    <td>28</td>
+                                    <td>9</td>
+                                    <td>12</td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('playerModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e0f5f9;color:#0e7490">BA</div><div><div class="table-name">Burak Altıparmak</div><div class="table-sub">#4</div></div></div></td>
+                                    <td>Galatasaray</td>
+                                    <td><span class="pill def">Defans</span></td>
+                                    <td>29</td>
+                                    <td>🇹🇷 TUR</td>
+                                    <td>27</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('playerModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#f0ecfd;color:#5b21b6">KA</div><div><div class="table-name">Kerem Aktürkoğlu</div><div class="table-sub">#11</div></div></div></td>
+                                    <td>Galatasaray</td>
+                                    <td><span class="pill fwd">Forvet</span></td>
+                                    <td>25</td>
+                                    <td>🇹🇷 TUR</td>
+                                    <td>24</td>
+                                    <td>11</td>
+                                    <td>7</td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('playerModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fef3e2;color:#92400e">MG</div><div><div class="table-name">Mert Günok</div><div class="table-sub">#1</div></div></div></td>
+                                    <td>Beşiktaş</td>
+                                    <td><span class="pill gk">Kaleci</span></td>
+                                    <td>34</td>
+                                    <td>🇹🇷 TUR</td>
+                                    <td>28</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('playerModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== FIXTURES PAGE ===== -->
+            <div class="page" id="page-fixtures">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>Maç Yönetimi</h1>
+                        <p>Tüm fikstür ve maç sonuçları</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('fixtureModal')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                        Maç Ekle
+                    </button>
+                </div>
+                <div class="toolbar">
+                    <input class="search-input" type="text" placeholder="Maç ara...">
+                    <select class="filter-select"><option>Tüm Haftalar</option><option>Hafta 28</option><option>Hafta 29</option><option>Hafta 30</option></select>
+                    <select class="filter-select"><option>Tüm Durumlar</option><option>Tamamlandı</option><option>Yakında</option><option>Canlı</option></select>
+                </div>
+                <div class="card">
+                    <div class="data-table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Hafta</th>
+                                    <th>Ev Sahibi</th>
+                                    <th>Skor</th>
+                                    <th>Deplasman</th>
+                                    <th>Tarih</th>
+                                    <th>Stadyum</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span style="font-weight:600;color:var(--text-muted)">H28</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e8f5ed;color:#065f2a">GS</div>Galatasaray</div></td>
+                                    <td><span style="font-family:var(--font-display);font-weight:700;font-size:16px;background:var(--off-white);padding:4px 10px;border-radius:6px;border:1px solid var(--border)">3 – 1</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#f0ecfd;color:#5b21b6">BJK</div>Beşiktaş</div></td>
+                                    <td>15 Nis 2025</td>
+                                    <td>RAMS Park</td>
+                                    <td><span class="match-status status-done">Bitti</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('fixtureModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:600;color:var(--text-muted)">H28</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fef2f2;color:#991b1b">FB</div>Fenerbahçe</div></td>
+                                    <td><span style="font-family:var(--font-display);font-weight:700;font-size:16px;background:var(--off-white);padding:4px 10px;border-radius:6px;border:1px solid var(--border)">2 – 2</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fffbeb;color:#92400e">TS</div>Trabzonspor</div></td>
+                                    <td>14 Nis 2025</td>
+                                    <td>Ülker Stadyumu</td>
+                                    <td><span class="match-status status-done">Bitti</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('fixtureModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:600;color:var(--danger)">H29</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#f0ecfd;color:#5b21b6">BJK</div>Beşiktaş</div></td>
+                                    <td><span style="font-family:var(--font-display);font-weight:700;font-size:16px;background:#fef2f2;padding:4px 10px;border-radius:6px;border:1px solid #ffd0d0;color:var(--danger)">● CANLI</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e0f5f9;color:#0e7490">ANT</div>Antalyaspor</div></td>
+                                    <td>17 Nis 2025</td>
+                                    <td>Tüpraş Stadyumu</td>
+                                    <td><span class="match-status status-live">Canlı</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('fixtureModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:600;color:var(--info)">H29</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fffbeb;color:#92400e">TS</div>Trabzonspor</div></td>
+                                    <td><span style="font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--text-muted);background:var(--off-white);padding:4px 10px;border-radius:6px;border:1px solid var(--border)">vs</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e8f5ed;color:#065f2a">GS</div>Galatasaray</div></td>
+                                    <td>18 Nis 2025</td>
+                                    <td>Medical Park</td>
+                                    <td><span class="match-status status-upcoming">Yakında</span></td>
+                                    <td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="openModal('fixtureModal')">Düzenle</button><button class="btn btn-danger btn-sm">Sil</button></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STANDINGS PAGE ===== -->
+            <div class="page" id="page-standings">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>Puan Durumu</h1>
+                        <p>2024/25 Super Lig — Hafta 28</p>
+                    </div>
+                    <button class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
+                        Dışa Aktar
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Lig Tablosu</div>
+                        <div style="display:flex;gap:12px;font-size:12px;color:var(--text-muted);align-items:center">
+                            <span style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:var(--pitch)"></div>Şampiyon</span>
+                            <span style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:#2080c0"></div>Avrupa</span>
+                            <span style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:var(--danger)"></div>Küme Düşme</span>
+                        </div>
+                    </div>
+                    <div class="data-table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Takım</th>
+                                    <th class="center">O</th>
+                                    <th class="center">G</th>
+                                    <th class="center">B</th>
+                                    <th class="center">M</th>
+                                    <th class="center">AG</th>
+                                    <th class="center">YG</th>
+                                    <th class="center">A/F</th>
+                                    <th class="center">P</th>
+                                    <th>Form</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background:rgba(26,122,63,0.04)">
+                                    <td><span style="width:20px;height:20px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;background:var(--pitch);color:white;font-size:12px;font-weight:700">1</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e8f5ed;color:#065f2a">GS</div><div><div class="table-name">Galatasaray</div></div></div></td>
+                                    <td class="center">28</td>
+                                    <td class="center">19</td>
+                                    <td class="center">5</td>
+                                    <td class="center">4</td>
+                                    <td class="center">61</td>
+                                    <td class="center">29</td>
+                                    <td class="center">+32</td>
+                                    <td class="center"><span class="pts-badge" style="font-size:17px">62</span></td>
+                                    <td><div class="form-dots"><div class="dot w"></div><div class="dot w"></div><div class="dot w"></div><div class="dot d"></div><div class="dot w"></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight:700;color:var(--text-secondary)">2</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fef2f2;color:#991b1b">FB</div>Fenerbahçe</div></td>
+                                    <td class="center">28</td>
+                                    <td class="center">18</td>
+                                    <td class="center">5</td>
+                                    <td class="center">5</td>
+                                    <td class="center">55</td>
+                                    <td class="center">31</td>
+                                    <td class="center">+24</td>
+                                    <td class="center"><span class="pts-badge">59</span></td>
+                                    <td><div class="form-dots"><div class="dot w"></div><div class="dot d"></div><div class="dot w"></div><div class="dot w"></div><div class="dot d"></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#f0ecfd;color:#5b21b6">BJK</div>Beşiktaş</div></td>
+                                    <td class="center">28</td>
+                                    <td class="center">14</td>
+                                    <td class="center">6</td>
+                                    <td class="center">8</td>
+                                    <td class="center">44</td>
+                                    <td class="center">38</td>
+                                    <td class="center">+6</td>
+                                    <td class="center"><span class="pts-badge" style="color:#7c3aed">48</span></td>
+                                    <td><div class="form-dots"><div class="dot l"></div><div class="dot w"></div><div class="dot w"></div><div class="dot l"></div><div class="dot w"></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fffbeb;color:#92400e">TS</div>Trabzonspor</div></td>
+                                    <td class="center">28</td>
+                                    <td class="center">13</td>
+                                    <td class="center">7</td>
+                                    <td class="center">8</td>
+                                    <td class="center">42</td>
+                                    <td class="center">35</td>
+                                    <td class="center">+7</td>
+                                    <td class="center"><span class="pts-badge" style="color:#d97706">46</span></td>
+                                    <td><div class="form-dots"><div class="dot w"></div><div class="dot l"></div><div class="dot d"></div><div class="dot w"></div><div class="dot d"></div></div></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#e0f5f9;color:#0e7490">ANT</div>Antalyaspor</div></td>
+                                    <td class="center">28</td>
+                                    <td class="center">10</td>
+                                    <td class="center">8</td>
+                                    <td class="center">10</td>
+                                    <td class="center">38</td>
+                                    <td class="center">40</td>
+                                    <td class="center">-2</td>
+                                    <td class="center"><span class="pts-badge" style="color:var(--info)">38</span></td>
+                                    <td><div class="form-dots"><div class="dot d"></div><div class="dot w"></div><div class="dot l"></div><div class="dot d"></div><div class="dot l"></div></div></td>
+                                </tr>
+                                <tr style="background:rgba(224,64,64,0.03)">
+                                    <td><span style="width:20px;height:20px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;background:var(--danger);color:white;font-size:12px;font-weight:700">8</span></td>
+                                    <td><div class="table-cell-flex"><div class="table-avatar" style="background:#fef2f2;color:#991b1b">MK</div>Malatyaspor</div></td>
+                                    <td class="center">28</td>
+                                    <td class="center">5</td>
+                                    <td class="center">4</td>
+                                    <td class="center">19</td>
+                                    <td class="center">22</td>
+                                    <td class="center">58</td>
+                                    <td class="center">-36</td>
+                                    <td class="center"><span class="pts-badge" style="color:var(--danger)">19</span></td>
+                                    <td><div class="form-dots"><div class="dot l"></div><div class="dot l"></div><div class="dot l"></div><div class="dot d"></div><div class="dot l"></div></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STATS PAGE ===== -->
+            <div class="page" id="page-stats">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <h1>İstatistikler</h1>
+                        <p>2024/25 sezon genel analizi</p>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card green">
+                        <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /></svg></div>
+                        <div class="stat-label">Toplam Gol</div>
+                        <div class="stat-value">183</div>
+                        <div class="stat-change">Maç başı 3.27</div>
+                    </div>
+                    <div class="stat-card teal">
+                        <div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z" /></svg></div>
+                        <div class="stat-label">Sarı Kart</div>
+                        <div class="stat-value">124</div>
+                        <div class="stat-change">Maç başı 2.2</div>
+                    </div>
+                    <div class="stat-card amber">
+                        <div class="stat-icon amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" /></svg></div>
+                        <div class="stat-label">Kırmızı Kart</div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-change">0.21 / maç</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg></div>
+                        <div class="stat-label">Hat-Trick</div>
+                        <div class="stat-value">3</div>
+                        <div class="stat-change">Bu sezon</div>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">Takım Başarı Oranı</div></div>
+                        <div class="card-body"><div class="chart-container"><canvas id="winRateChart"></canvas></div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">Aylık Gol Trendi</div></div>
+                        <div class="card-body"><div class="chart-container"><canvas id="monthlyGoalChart"></canvas></div></div>
+                    </div>
+                </div>
+            </div>
+
+        </div> *@
+    </div>
+
+    <!-- MODALS -->
+    <!-- Team Modal -->
+    @* <div class="modal-overlay" id="teamModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Yeni Takım Ekle</h3>
+                <button class="modal-close" onclick="closeModal('teamModal')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Takım Adı</label><input class="form-input" type="text" placeholder="ör. Galatasaray"></div>
+                    <div class="form-group"><label class="form-label">Kısa Ad</label><input class="form-input" type="text" placeholder="ör. GS" maxlength="4"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Şehir</label><input class="form-input" type="text" placeholder="ör. İstanbul"></div>
+                    <div class="form-group"><label class="form-label">Kuruluş Yılı</label><input class="form-input" type="number" placeholder="ör. 1905"></div>
+                </div>
+                <div class="form-group"><label class="form-label">Stadyum</label><input class="form-input" type="text" placeholder="ör. RAMS Park"></div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Forma Rengi 1</label><input class="form-input" type="color" value="#e8251a"></div>
+                    <div class="form-group"><label class="form-label">Forma Rengi 2</label><input class="form-input" type="color" value="#f7b00d"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('teamModal')">İptal</button>
+                <button class="btn btn-primary" onclick="closeModal('teamModal')">Takımı Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Modal -->
+    <div class="modal-overlay" id="playerModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Yeni Oyuncu Ekle</h3>
+                <button class="modal-close" onclick="closeModal('playerModal')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Ad</label><input class="form-input" type="text" placeholder="ör. Karim"></div>
+                    <div class="form-group"><label class="form-label">Soyad</label><input class="form-input" type="text" placeholder="ör. Benzema"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Takım</label>
+                        <select class="form-input"><option>Galatasaray</option><option>Fenerbahçe</option><option>Beşiktaş</option><option>Trabzonspor</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mevki</label>
+                        <select class="form-input"><option>Kaleci</option><option>Defans</option><option>Orta Saha</option><option>Forvet</option></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Forma No</label><input class="form-input" type="number" placeholder="1-99" min="1" max="99"></div>
+                    <div class="form-group"><label class="form-label">Doğum Tarihi</label><input class="form-input" type="date"></div>
+                </div>
+                <div class="form-group"><label class="form-label">Uyruk</label><input class="form-input" type="text" placeholder="ör. Türkiye"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('playerModal')">İptal</button>
+                <button class="btn btn-primary" onclick="closeModal('playerModal')">Oyuncuyu Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixture Modal -->
+    <div class="modal-overlay" id="fixtureModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Maç Ekle / Düzenle</h3>
+                <button class="modal-close" onclick="closeModal('fixtureModal')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Ev Sahibi</label>
+                        <select class="form-input"><option>Galatasaray</option><option>Fenerbahçe</option><option>Beşiktaş</option><option>Trabzonspor</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Deplasman</label>
+                        <select class="form-input"><option>Fenerbahçe</option><option>Galatasaray</option><option>Beşiktaş</option><option>Trabzonspor</option></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Tarih</label><input class="form-input" type="date"></div>
+                    <div class="form-group"><label class="form-label">Saat</label><input class="form-input" type="time" value="20:00"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Ev Sahibi Golü</label><input class="form-input" type="number" placeholder="0" min="0"></div>
+                    <div class="form-group"><label class="form-label">Deplasman Golü</label><input class="form-input" type="number" placeholder="0" min="0"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label class="form-label">Hafta</label><input class="form-input" type="number" placeholder="29" min="1"></div>
+                    <div class="form-group"><label class="form-label">Stadyum</label><input class="form-input" type="text" placeholder="Stadyum adı"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Durum</label>
+                    <select class="form-input"><option>Yakında</option><option>Canlı</option><option>Tamamlandı</option><option>Ertelendi</option></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('fixtureModal')">İptal</button>
+                <button class="btn btn-primary" onclick="closeModal('fixtureModal')">Maçı Kaydet</button>
+            </div>
+        </div>
+    </div> *@
+    @await Component.InvokeAsync("_AdminScriptComponentPartial")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

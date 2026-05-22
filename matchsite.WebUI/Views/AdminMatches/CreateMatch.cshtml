@@ -1,0 +1,103 @@
+﻿@model CreateMatchDto
+
+@{
+    ViewData["Title"] = "Yeni Maç Planla";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<style>
+    .custom-form-group {
+        margin-bottom: 20px;
+    }
+
+    .custom-label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .custom-input, .custom-select {
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 14px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #fff;
+        color: #333;
+        transition: all 0.2s ease;
+    }
+
+        .custom-input:focus, .custom-select:focus {
+            border-color: #28a745 !important;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+        }
+
+    .form-btn-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #f1f3f5;
+    }
+</style>
+
+<div class="container-fluid pt-4">
+    <div class="card shadow-sm border-0" style="border-radius: 12px; overflow: hidden; background: #fff;">
+        <div class="card-header bg-white py-3 border-bottom">
+            <h5 class="mb-0 text-dark fw-bold" style="font-size: 18px;">Yeni Maç Planlama</h5>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="post">
+
+                <div class="custom-form-group">
+                    <label class="custom-label">Ev Sahibi Takım</label>
+                    <select asp-for="HomeTeamId" class="custom-select" required>
+                        <option value="">-- Ev Sahibi Takımı Seçiniz --</option>
+                        @if (ViewBag.Teams != null)
+                        {
+                            foreach (var team in ViewBag.Teams)
+                            {
+                                <option value="@team.TeamId">@team.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="custom-form-group">
+                    <label class="custom-label">Deplasman Takımı</label>
+                    <select asp-for="AwayTeamId" class="custom-select" required>
+                        <option value="">-- Deplasman Takımını Seçiniz --</option>
+                        @if (ViewBag.Teams != null)
+                        {
+                            foreach (var team in ViewBag.Teams)
+                            {
+                                <option value="@team.TeamId">@team.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="custom-form-group">
+                    <label class="custom-label">Maç Tarihi ve Saati</label>
+                    <input type="datetime-local" asp-for="MatchDate" class="custom-input" required />
+                </div>
+
+                <input type="hidden" asp-for="MatchStatus" value="NS" />
+
+                <div class="form-btn-container">
+                    <a href="/AdminMatches/Index" class="btn btn-light px-4" style="border-radius: 8px; font-weight: 500; border: 1px solid #e0e0e0;">İptal</a>
+                    <button type="submit" class="btn btn-success px-4" style="border-radius: 8px; font-weight: 500;">
+                        Maçı Planla
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+

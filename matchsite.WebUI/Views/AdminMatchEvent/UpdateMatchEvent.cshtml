@@ -1,0 +1,222 @@
+﻿@model UpdateMatchEventDto
+@{
+    ViewData["Title"] = "Maç Etkinliğini Güncelle";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<style>
+    .matchmind-form-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+        color: #333;
+        max-width: 800px;
+    }
+
+    .matchmind-form-header {
+        margin-bottom: 25px;
+    }
+
+        .matchmind-form-header h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #111;
+        }
+
+    .mm-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid #e0e0e0;
+        padding: 25px;
+    }
+
+    .mm-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .mm-col {
+        flex: 1;
+    }
+
+    .mm-form-group {
+        margin-bottom: 15px;
+    }
+
+        .mm-form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #444;
+            font-size: 13px;
+        }
+
+    .mm-form-control {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+    }
+
+        .mm-form-control:focus {
+            border-color: #0f5132;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.1);
+        }
+
+    .mm-btn-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .mm-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+    }
+
+    .mm-btn-submit {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+        .mm-btn-submit:hover {
+            background-color: #e0a800;
+        }
+
+    .mm-btn-cancel {
+        background-color: #e2e3e5;
+        color: #333;
+    }
+
+        .mm-btn-cancel:hover {
+            background-color: #d3d4d5;
+        }
+</style>
+
+<div class="matchmind-form-container">
+    <div class="matchmind-form-header">
+        <h3>Maç Canlı Etkinlik Kaydını Düzenle</h3>
+    </div>
+
+    <div class="mm-card">
+        <form  method="post">
+
+            <input type="hidden" name="MatchEventId" value="@Model.MatchEventId" />
+
+            <div class="mm-row">
+                <div class="mm-col mm-form-group">
+                    <label for="MatchId">İlgili Maç</label>
+                    <select id="MatchId" name="MatchId" class="mm-form-control" required>
+                        <option value="">Maç Seçiniz...</option>
+                        @if (ViewBag.Matches != null)
+                        {
+                            foreach (var match in ViewBag.Matches)
+                            {
+                                var id = match.matchId ?? match.id;
+                                var title = match.matchTitle ?? match.title ?? $"{match.homeTeamName} - {match.awayTeamName}";
+                                <option value="@id" selected="@(id == Model.MatchId)">@title</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mm-col mm-form-group">
+                    <label for="TeamId">Olayı Gerçekleştiren Takım</label>
+                    <select id="TeamId" name="TeamId" class="mm-form-control" required>
+                        <option value="">Takım Seçiniz...</option>
+                        @if (ViewBag.Teams != null)
+                        {
+                            foreach (var team in ViewBag.Teams)
+                            {
+                                var id = team.teamId ?? team.id;
+                                var name = team.teamName ?? team.name;
+                                <option value="@id" selected="@(id == Model.TeamId)">@name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="mm-row">
+                <div class="mm-col mm-form-group">
+                    <label for="MatchEventTypeId">Etkinlik Türü</label>
+                    <select id="MatchEventTypeId" name="MatchEventTypeId" class="mm-form-control" required>
+                        <option value="">Tür Seçiniz...</option>
+                        @if (ViewBag.EventTypes != null)
+                        {
+                            foreach (var type in ViewBag.EventTypes)
+                            {
+                                var id = type.matchEventTypeId ?? type.id;
+                                var name = type.name;
+                                <option value="@id" selected="@(id == Model.MatchEventTypeId)">@name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mm-col mm-form-group">
+                    <label for="Minute">Dakika</label>
+                    <input type="number" id="Minute" name="Minute" class="mm-form-control" min="1" max="120" value="@Model.Minute" required />
+                </div>
+                <div class="mm-col mm-form-group">
+                    <label for="ExtraTime">Uzatma Dakikası (Opsiyonel)</label>
+                    <input type="number" id="ExtraTime" name="ExtraTime" class="mm-form-control" min="0" max="15" value="@Model.ExtraTime" />
+                </div>
+            </div>
+
+            <div class="mm-row">
+                <div class="mm-col mm-form-group">
+                    <label for="PlayerId">Esas Oyuncu (Golü Atan / Kart Gören / Çıkan)</label>
+                    <select id="PlayerId" name="PlayerId" class="mm-form-control">
+                        <option value="">Oyuncu Seçiniz (Yoksa Boş Bırakın)...</option>
+                        @if (ViewBag.Players != null)
+                        {
+                            foreach (var player in ViewBag.Players)
+                            {
+                                var id = player.playerId ?? player.id;
+                                // API'den sadece FullName geldiği için doğrudan eşleştiriyoruz
+                                var name = player.playerFullName ?? player.fullName ?? player.name;
+                                <option value="@id" selected="@(id == Model.PlayerId)">@name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mm-col mm-form-group">
+                    <label for="RelatedPlayerId">İlişkili Oyuncu (Asist Yapan / Oyuna Giren)</label>
+                    <select id="RelatedPlayerId" name="RelatedPlayerId" class="mm-form-control">
+                        <option value="">İlişkili Oyuncu Seçiniz (Yoksa Boş Bırakın)...</option>
+                        @if (ViewBag.Players != null)
+                        {
+                            foreach (var player in ViewBag.Players)
+                            {
+                                var id = player.playerId ?? player.id;
+                                var name = player.playerFullName ?? player.fullName ?? player.name;
+                                <option value="@id" selected="@(id == Model.RelatedPlayerId)">@name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="mm-form-group">
+                <label for="Description">Etkinlik Açıklaması</label>
+                <input type="text" id="Description" name="Description" class="mm-form-control" value="@Model.Description" placeholder="Etkinlik detayları..." />
+            </div>
+
+            <div class="mm-btn-group">
+                <a href="/AdminMatchEvent/Index" class="mm-btn mm-btn-cancel">İptal</a>
+                <button type="submit" class="mm-btn mm-btn-submit">Değişiklikleri Kaydet</button>
+            </div>
+
+        </form>
+    </div>
+</div>

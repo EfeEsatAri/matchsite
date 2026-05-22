@@ -1,0 +1,219 @@
+﻿@model List<matchsite.WebUI.Dtos.StandingDto.ResultStandingDto>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+    @await Component.InvokeAsync("_LayoutHeadComponentPartial")
+<body>
+    @await Component.InvokeAsync("_LayoutNavbarComponentPartial")
+
+    <main>
+        <div class="wrap" style="padding-top:28px;padding-bottom:56px">
+            <div class="container">
+
+                <div class="sec-ttl mb-4 fw-bold text-uppercase tracking-wider text-light d-flex align-items-center" style="font-size: 16px; opacity: 0.9; letter-spacing: 0.5px;">
+                    🏆 &nbsp; Premier Lig Puan Durumu
+                </div>
+
+                <div class="table-responsive rounded-4 border" style="background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.06) !important; backdrop-filter: blur(10px);">
+                    <table class="table table-dark table-hover align-middle mb-0 custom-standing-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center" style="width: 60px;">#</th>
+                                <th scope="col">Takım</th>
+                                <th scope="col" class="text-center">OM</th>
+                                <th scope="col" class="text-center d-none d-md-table-cell">G</th>
+                                <th scope="col" class="text-center d-none d-md-table-cell">B</th>
+                                <th scope="col" class="text-center d-none d-md-table-cell">M</th>
+                                <th scope="col" class="text-center d-none d-sm-table-cell">AG</th>
+                                <th scope="col" class="text-center d-none d-sm-table-cell">YG</th>
+                                <th scope="col" class="text-center">AV</th>
+                                <th scope="col" class="text-center fw-bold text-warning" style="width: 70px;">P</th>
+                                <th scope="col" class="text-center d-none d-lg-table-cell" style="width: 160px;">Son 5 Maç</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                foreach (var team in Model.OrderBy(s => s.Position))
+                                {
+                                    string rowZoneClass = "";
+                                    if (team.Position <= 4) rowZoneClass = "zone-ucl";
+                                    else if (team.Position == 5) rowZoneClass = "zone-uel";
+                                    else if (team.Position == 6) rowZoneClass = "zone-ucll";
+                                    else if (team.Position >= 18) rowZoneClass = "zone-relegation";
+
+                                    <tr class="@rowZoneClass">
+                                        <td class="text-center fw-bold position-cell">
+                                            <span class="pos-num">@team.Position</span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="d-flex align-items-center justify-content-center p-1 square-logo-wrap">
+                                                    <img src="@team.LogoUrl" alt="@team.TeamName" onerror="this.src='https://placehold.co/24x24?text=⚽';" class="img-fluid" />
+                                                </div>
+                                                <span class="fw-semibold text-white team-name-text">@team.TeamName</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center text-white-50">@team.Played</td>
+                                        <td class="text-center text-white-50 d-none d-md-table-cell">@team.Won</td>
+                                        <td class="text-center text-white-50 d-none d-md-table-cell">@team.Draw</td>
+                                        <td class="text-center text-white-50 d-none d-md-table-cell">@team.Lost</td>
+                                        <td class="text-center text-white-50 d-none d-sm-table-cell">@team.GoalsFor</td>
+                                        <td class="text-center text-white-50 d-none d-sm-table-cell">@team.GoalsAgainst</td>
+                                        <td class="text-center fw-medium @(team.GoalDifference > 0 ? "text-success" : (team.GoalDifference < 0 ? "text-danger" : "text-white-50"))">
+                                            @(team.GoalDifference > 0 ? "+" + team.GoalDifference : team.GoalDifference.ToString())
+                                        </td>
+                                        <td class="text-center fw-bold text-white score-points">@team.Points</td>
+                                        <td class="text-center d-none d-lg-table-cell">
+                                            <div class="d-flex justify-content-center gap-1">
+                                                @if (!string.IsNullOrEmpty(team.LastFiveMatches))
+                                                {
+                                                    var forms = team.LastFiveMatches.Replace("-", "").ToCharArray();
+                                                    foreach (var f in forms)
+                                                    {
+                                                        if (f == 'W' || f == 'G')
+                                                        {
+                                                            <span class="form-dot bg-success" title="Galibiyet">G</span>
+                                                        }
+                                                        else if (f == 'D' || f == 'B')
+                                                        {
+
+                                                            <span class="form-dot bg-secondary" title="Beraberlik">B</span>
+                                                        }
+                                                        else if (f == 'L' || f == 'M')
+                                                        {
+
+                                                            <span class="form-dot bg-danger" title="Mağlubiyet">M</span>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row g-2 mt-3 px-2 text-white-50" style="font-size: 12px;">
+                    <div class="col-6 col-md-3 d-flex align-items-center gap-2">
+                        <span class="legend-indicator bg-primary"></span> UEFA Şampiyonlar Ligi
+                    </div>
+                    <div class="col-6 col-md-3 d-flex align-items-center gap-2">
+                        <span class="legend-indicator bg-warning"></span> UEFA Avrupa Ligi
+                    </div>
+                    <div class="col-6 col-md-3 d-flex align-items-center gap-2">
+                        <span class="legend-indicator bg-info"></span> UEFA Konferans Ligi
+                    </div>
+                    <div class="col-6 col-md-3 d-flex align-items-center gap-2">
+                        <span class="legend-indicator bg-danger"></span> Küme Düşme (Championship)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    @await Component.InvokeAsync("_LayoutFooterComponentPartial")
+</body>
+</html>
+
+<style>
+    /* Tablo Sıfırlamaları ve Arka Plan Uyumu */
+    .custom-standing-table {
+        background: transparent !important;
+        border-collapse: separate;
+    }
+
+        .custom-standing-table thead th {
+            background: rgba(255,255,255,0.02) !important;
+            border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+            color: rgba(255,255,255,0.4) !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            padding: 14px;
+        }
+
+        .custom-standing-table tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+            transition: background 0.15s ease;
+        }
+
+            .custom-standing-table tbody tr:hover {
+                background: rgba(255, 255, 255, 0.03) !important;
+            }
+
+        .custom-standing-table td {
+            padding: 12px 14px;
+            border: none;
+        }
+
+    /* Kare Logo Çerçeve Tasarımı */
+    .square-logo-wrap {
+        width: 32px;
+        height: 32px;
+        background: rgba(255,255,255,0.04) !important;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 6px;
+    }
+
+        .square-logo-wrap img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+    /* Puan ve Vurgular */
+    .score-points {
+        font-size: 15px;
+        color: #fff !important;
+    }
+
+    .position-cell {
+        position: relative;
+    }
+
+    /* Premier Lig Bölge Çizgileri (Sol Kenarlık Efektleri) */
+    .zone-ucl td:first-child {
+        border-left: 4px solid #0d6efd !important;
+    }
+
+    .zone-uel td:first-child {
+        border-left: 4px solid #ffc107 !important;
+    }
+
+    .zone-ucll td:first-child {
+        border-left: 4px solid #0dcaf0 !important;
+    }
+
+    .zone-relegation td:first-child {
+        border-left: 4px solid #dc3545 !important;
+    }
+
+    /* Son 5 Maç Form Noktaları */
+    .form-dot {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: 700;
+        color: #fff;
+        user-select: none;
+    }
+
+    /* Alt bilgilendirme göstergeleri */
+    .legend-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+    }
+</style>

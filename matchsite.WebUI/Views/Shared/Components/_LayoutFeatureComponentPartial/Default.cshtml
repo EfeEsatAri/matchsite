@@ -1,0 +1,106 @@
+﻿<div class="feat-wrap" id="featWrap">
+    <div class="feat-lbl mb-3 fw-bold text-uppercase tracking-wider text-light" style="font-size: 14px; opacity: 0.8; letter-spacing: 1px;">
+        <i class="bi bi-star-fill text-warning me-1"></i> Öne Çıkan Maçlar (Yaklaşanlar)
+    </div>
+
+    @if (ViewBag.FeaturedMatches != null && ((List<ResultMatchDto>)ViewBag.FeaturedMatches).Count > 0)
+    {
+        foreach (var match in (List<ResultMatchDto>)ViewBag.FeaturedMatches)
+        {
+            <a href="/Layout/MatchDetail/@match.MatchId" class="feat-card clean-card d-block mb-3 p-4 text-decoration-none position-relative transition-all overflow-hidden"
+               style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; backdrop-filter: blur(10px); transition: transform 0.2s, background 0.2s;">
+
+                <div class="position-absolute" style="top: 16px; right: -32px; background: #ffc107; color: #000; transform: rotate(45deg); width: 120px; font-size: 9px; font-weight: 800; letter-spacing: 1px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); padding: 3px 0; z-index: 10;">
+                    ÖNE ÇIKAN
+                </div>
+
+                <div class="row align-items-center g-2">
+
+                    <div class="col-5">
+                        <div class="ft-team text-center">
+                            <div class="ft-logo mx-auto d-flex align-items-center justify-content-center p-2"
+                                 style="width: 116px; height: 116px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; box-shadow: inset 0 0 10px rgba(255,255,255,0.02);">
+                                <img src="@match.HomeTeamLogo" alt="@match.HomeTeamName" onerror="this.src='https://placehold.co/100x100?text=⚽';" style="width:100px; height:100px; object-fit:contain;" />
+                            </div>
+                            <div class="ft-name fw-bold mt-3 text-white" style="font-size: 15px;">@match.HomeTeamName</div>
+                            <div class="ft-type small text-white-50 mt-1" style="font-size: 12px;">EV SAHİBİ</div>
+                        </div>
+                    </div>
+
+                    <div class="col-2 text-center">
+                        <div class="ft-sc-area">
+                            @if (match.IsFinished || match.MatchStatus == "FT")
+                            {
+                                <div class="ft-sc fw-bold text-white mb-1" style="font-size:20px; letter-spacing: 1px;">@match.HomeScore – @match.AwayScore</div>
+                                <div class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1" style="font-size: 11px;"><i class="bi bi-check2-circle"></i> BİTTİ</div>
+                            }
+                            else if (match.MatchStatus == "NS")
+                            {
+                                <div class="ft-sc fw-bold text-white-50 mb-2" style="font-size:13px; background: rgba(255,255,255,0.06); padding: 6px 16px; border-radius:20px; display:inline-block; letter-spacing: 1px;">BAŞLAMADI</div>
+                            }
+                            else
+                            {
+                                <div class="ft-sc fw-bold text-white bg-danger px-3 py-1 rounded-pill d-inline-block mb-1" style="font-size:16px; box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);">@match.HomeScore – @match.AwayScore</div>
+                                <div class="ft-stat small text-danger fw-semibold animate-pulse d-block" style="font-size: 11px;"><i class="bi bi-play-circle"></i> CANLI</div>
+                            }
+
+                            <div class="ft-meta text-white fw-bold mt-2" style="font-size: 15px; letter-spacing: 0.5px;">@match.MatchDate.ToString("HH:mm")</div>
+                        </div>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="ft-team text-center">
+                            <div class="ft-logo mx-auto d-flex align-items-center justify-content-center p-2"
+                                 style="width: 116px; height: 116px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; box-shadow: inset 0 0 10px rgba(255,255,255,0.02);">
+                                <img src="@match.AwayTeamLogo" alt="@match.AwayTeamName" onerror="this.src='https://placehold.co/100x100?text=⚽';" style="width:100px; height:100px; object-fit:contain;" />
+                            </div>
+                            <div class="ft-name fw-bold mt-3 text-white" style="font-size: 15px;">@match.AwayTeamName</div>
+                            <div class="ft-type small text-white-50 mt-1" style="font-size: 12px;">DEPLASMAN</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3 pt-2" style="border-top: 1px solid rgba(255,255,255,0.05); font-size:12px;">
+                    <div class="text-white-50">
+                        <i class="bi bi-calendar3 me-1"></i> @match.MatchDate.ToString("dd MMMM yyyy")
+                    </div>
+                    <div class="text-info fw-semibold link-hover">
+                        Detayları Gör <i class="bi bi-arrow-right ms-1"></i>
+                    </div>
+                </div>
+            </a>
+        }
+    }
+    else
+    {
+        <div class="text-center p-5 text-white-50 rounded border" style="background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.08) !important;">
+            <i class="bi bi-calendar-x d-block mb-2" style="font-size: 24px; color: rgba(255,255,255,0.3);"></i>
+            Önümüzdeki günlerde planlanmış öne çıkan maç bulunamadı.
+        </div>
+    }
+</div>
+
+<style>
+    /* CSS'ten (Feat-Card içinden) gelen eski "FEATURED MATCH" yazılarını tamamen kapatmaya zorlayan sihirli dokunuş */
+    .clean-card::before,
+    .clean-card::after,
+    .clean-card .featured-tag,
+    .clean-card [class*="featured"] {
+        display: none !important;
+        content: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+
+    .feat-card:hover {
+        background: rgba(255, 255, 255, 0.06) !important;
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+        .feat-card:hover .link-hover {
+            color: #0dcaf0 !important;
+            text-decoration: underline;
+        }
+</style>

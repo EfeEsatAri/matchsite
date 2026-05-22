@@ -1,0 +1,150 @@
+﻿@model CreatePlayerDto
+
+@{
+    ViewData["Title"] = "Yeni Oyuncu Ekle";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<style>
+    .matchmind-form-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+        color: #333;
+        max-width: 600px; /* Formun çok yayılmaması için sınırlandırdık */
+    }
+
+    .matchmind-form-header {
+        margin-bottom: 25px;
+    }
+
+        .matchmind-form-header h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #111;
+        }
+
+    .mm-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid #e0e0e0;
+        padding: 25px;
+    }
+
+    .mm-form-group {
+        margin-bottom: 20px;
+    }
+
+        .mm-form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+            font-size: 14px;
+        }
+
+    .mm-form-control {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box; /* Taşmayı önler */
+        transition: border-color 0.2s;
+    }
+
+        .mm-form-control:focus {
+            border-color: #0f5132;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.1);
+        }
+
+    .mm-btn-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .mm-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+    }
+
+    .mm-btn-submit {
+        background-color: #0f5132; /* Temandaki yeşil tonu */
+        color: white;
+    }
+
+        .mm-btn-submit:hover {
+            background-color: #0b3d25;
+        }
+
+    .mm-btn-cancel {
+        background-color: #e2e3e5;
+        color: #333;
+    }
+
+        .mm-btn-cancel:hover {
+            background-color: #d3d4d5;
+        }
+</style>
+
+<div class="matchmind-form-container">
+    <div class="matchmind-form-header">
+        <h3>Yeni Oyuncu Ekle</h3>
+    </div>
+
+    <div class="mm-card">
+        <form  method="post">
+
+            <div class="mm-form-group">
+                <label for="FullName">Oyuncu Adı Soyadı</label>
+                <input type="text" id="FullName" name="FullName" class="mm-form-control" placeholder="Örn: Mauro Icardi" required />
+            </div>
+
+            <div class="mm-form-group">
+                <label for="Number">Forma Numarası</label>
+                <input type="number" id="Number" name="Number" class="mm-form-control" placeholder="Örn: 99" min="1" max="99" required />
+            </div>
+
+            <div class="mm-form-group">
+                <label for="Position">Pozisyon</label>
+                <select id="Position" name="Position" class="mm-form-control" required>
+                    <option value="">Seçiniz...</option>
+                    <option value="Kaleci">Kaleci</option>
+                    <option value="Defans">Defans</option>
+                    <option value="Orta Saha">Orta Saha</option>
+                    <option value="Forvet">Forvet</option>
+                </select>
+            </div>
+
+            <div class="mm-form-group">
+                <label for="TeamId">Takım</label>
+                <select id="TeamId" name="TeamId" class="mm-form-control" required>
+                    <option value="">Takım Seçiniz...</option>
+
+                    @if (ViewBag.Teams != null)
+                    {
+                        foreach (var team in ViewBag.Teams)
+                        {
+                            // value kısmına TeamId, görünen kısma TeamName basıyoruz
+                            <option value="@team.TeamId">@team.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="mm-btn-group">
+                <a href="/AdminPlayer/Index" class="mm-btn mm-btn-cancel">İptal</a>
+                <button type="submit" class="mm-btn mm-btn-submit">Oyuncuyu Kaydet</button>
+            </div>
+
+        </form>
+    </div>
+</div>

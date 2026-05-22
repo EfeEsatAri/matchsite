@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "matchsite.WebApi", "matchsite.WebApi\matchsite.WebApi.csproj", "{728D18FC-0222-4620-B6A5-7AD091104BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "matchsite.WebUI", "matchsite.WebUI\matchsite.WebUI.csproj", "{CBEFA857-F29C-410A-BFB6-037831D0BD21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{728D18FC-0222-4620-B6A5-7AD091104BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{728D18FC-0222-4620-B6A5-7AD091104BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{728D18FC-0222-4620-B6A5-7AD091104BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{728D18FC-0222-4620-B6A5-7AD091104BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBEFA857-F29C-410A-BFB6-037831D0BD21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBEFA857-F29C-410A-BFB6-037831D0BD21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBEFA857-F29C-410A-BFB6-037831D0BD21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBEFA857-F29C-410A-BFB6-037831D0BD21}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F8D9E78-7E2B-457C-8658-55B2DFB0C253}
+	EndGlobalSection
+EndGlobal

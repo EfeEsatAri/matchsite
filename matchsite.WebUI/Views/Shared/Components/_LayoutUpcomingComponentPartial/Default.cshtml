@@ -1,0 +1,80 @@
+﻿<div class="sec-ttl mcw-section mb-3 fw-bold text-uppercase tracking-wider text-light d-flex align-items-center" data-s="upcoming" style="margin-top:22px; font-size: 14px; opacity: 0.9; letter-spacing: 0.5px;">
+    🕐 &nbsp; Yaklaşan Maçlar
+</div>
+
+<div class="mc-wrap mcw d-flex flex-column gap-2" data-s="upcoming">
+    @if (ViewBag.UpcomingMatches != null && ((List<ResultMatchDto>)ViewBag.UpcomingMatches).Count > 0)
+    {
+        foreach (var match in (List<ResultMatchDto>)ViewBag.UpcomingMatches)
+        {
+            <a href="/Layout/MatchDetail/@match.MatchId" class="mc d-flex align-items-center justify-content-between p-3 text-decoration-none transition-all"
+               style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; backdrop-filter: blur(10px); transition: transform 0.2s, background 0.2s;">
+
+                <div class="mc-time d-flex flex-column align-items-center justify-content-center pe-3" style="min-width: 75px;">
+                    <div class="mc-min bc fw-bold text-white" style="font-size: 14px;">@match.MatchDate.ToString("HH:mm")</div>
+
+                    @if (match.MatchDate.Date == DateTime.Today)
+                    {
+                        <div class="sbadge sb-up mt-1 px-2 py-0.5" style="font-size: 9px; font-weight: 700; background: #0dcaf0; color: #000; border-radius: 4px;">BUGÜN</div>
+                    }
+                    else
+                    {
+                        <div class="sbadge sb-up mt-1 px-2 py-0.5 text-white-50" style="font-size: 9px; font-weight: 700; background: rgba(255,255,255,0.08); border-radius: 4px;">@match.MatchDate.ToString("dd MMM")</div>
+                    }
+                </div>
+
+                <div class="dvv" style="width: 1px; height: 40px; background: rgba(255,255,255,0.08);"></div>
+
+                <div class="mc-teams flex-grow-1 px-4">
+                    <div class="mc-tr d-flex align-items-center justify-content-between mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="tl-sm d-flex align-items-center justify-content-center p-1"
+                                 style="width: 32px; height: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+                                <img src="@match.HomeTeamLogo" alt="@match.HomeTeamName" onerror="this.src='https://placehold.co/24x24?text=⚽';" style="width:24px; height:24px; object-fit:contain;" />
+                            </div>
+                            <span class="tn text-white fw-medium" style="font-size: 14px;">@match.HomeTeamName</span>
+                        </div>
+                        <span class="ts dim text-white-50" style="font-size: 14px;">—</span>
+                    </div>
+
+                    <div class="mc-tr d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="tl-sm d-flex align-items-center justify-content-center p-1"
+                                 style="width: 32px; height: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+                                <img src="@match.AwayTeamLogo" alt="@match.AwayTeamName" onerror="this.src='https://placehold.co/24x24?text=⚽';" style="width:24px; height:24px; object-fit:contain;" />
+                            </div>
+                            <span class="tn text-white fw-medium" style="font-size: 14px;">@match.AwayTeamName</span>
+                        </div>
+                        <span class="ts dim text-white-50" style="font-size: 14px;">—</span>
+                    </div>
+                </div>
+
+                <div class="det-btn-custom d-flex align-items-center gap-1 ps-2 text-info transition-all" style="opacity: 0.6; font-size: 13px; font-weight: 500;">
+                    <i class="bi bi-calendar-check me-1"></i>
+                    <span class="d-none d-sm-inline">Fikstür</span>
+                    <i class="bi bi-chevron-right small ms-1"></i>
+                </div>
+
+            </a>
+        }
+    }
+    else
+    {
+        <div class="text-center p-4 text-white-50 rounded border" style="background: rgba(255,255,255,0.01); border-color: rgba(255,255,255,0.06) !important; font-size: 13px;">
+            Yakın zamanda planlanmış yaklaşan bir maç bulunmuyor.
+        </div>
+    }
+</div>
+
+<style>
+    .mc:hover {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+        transform: translateX(2px);
+    }
+
+        .mc:hover .det-btn-custom {
+            opacity: 1 !important;
+            color: #0dcaf0 !important;
+        }
+</style>

@@ -1,0 +1,135 @@
+﻿@model UpdateMatchDto
+@{
+    ViewData["Title"] = "Maç / Skor Güncelle";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<style>
+    .custom-form-group {
+        margin-bottom: 20px;
+    }
+
+    .custom-label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .custom-input, .custom-select {
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 14px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #fff;
+        color: #333;
+        transition: all 0.2s ease;
+    }
+
+        .custom-input:focus, .custom-select:focus {
+            border-color: #28a745 !important;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+        }
+
+    .custom-checkbox {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #28a745;
+    }
+
+    .form-btn-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #f1f3f5;
+    }
+</style>
+
+<div class="container-fluid pt-4">
+    <div class="card shadow-sm border-0" style="border-radius: 12px; overflow: hidden; background: #fff;">
+        <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-dark fw-bold" style="font-size: 18px;">Maç & Skor Bilgisi Güncelle</h5>
+            <span class="badge bg-dark px-3 py-2" style="font-size: 12px; border-radius: 6px;">Maç ID: #@Model.MatchId</span>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="post">
+                <input type="hidden" asp-for="MatchId" />
+
+                <div class="row mb-3" style="display: flex; gap: 15px;">
+                    <div style="flex: 1;">
+                        <label class="custom-label">Ev Sahibi Gol</label>
+                        <input type="number" asp-for="HomeScore" class="custom-input" min="0" placeholder="0" />
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="custom-label">Deplasman Gol</label>
+                        <input type="number" asp-for="AwayScore" class="custom-input" min="0" placeholder="0" />
+                    </div>
+                </div>
+
+                <div class="custom-form-group">
+                    <label class="custom-label">Maç Durumu (Status)</label>
+                    <select asp-for="MatchStatus" class="custom-select">
+                        <option value="NS">NS (Başlamadı)</option>
+                        <option value="LIVE">LIVE (Canlı Oynanıyor)</option>
+                        <option value="FT">FT (Maç Bitti)</option>
+                        <option value="PST">PST (Ertelendi)</option>
+                    </select>
+                </div>
+
+                <div class="row mb-3" style="display: flex; gap: 15px;">
+                    <div style="flex: 1;">
+                        <label class="custom-label">Toplam Gol</label>
+                        <input type="number" asp-for="TotalGoals" class="custom-input" min="0" />
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="custom-label">Toplam Sarı Kart</label>
+                        <input type="number" asp-for="TotalYellowCards" class="custom-input" min="0" />
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="custom-label">Toplam Kırmızı Kart</label>
+                        <input type="number" asp-for="TotalRedCards" class="custom-input" min="0" />
+                    </div>
+                </div>
+
+                <div class="custom-form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 25px;">
+                    <input type="checkbox" asp-for="IsFinished" class="custom-checkbox" id="isFinishedCheck" />
+                    <label for="isFinishedCheck" style="font-weight: 600; color: #333; cursor: pointer; font-size: 14px;">
+                        Maç Tamamen Sonuçlandı mı? (IsFinished)
+                    </label>
+                </div>
+
+                <div class="form-btn-container">
+                    <a href="/AdminMatches/Index" class="btn btn-light px-4" style="border-radius: 8px; font-weight: 500; border: 1px solid #e0e0e0;">İptal</a>
+                    <button type="submit" class="btn btn-warning px-4 text-dark" style="border-radius: 8px; font-weight: 600;">
+                        Değişiklikleri Kaydet
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const homeScore = document.querySelector('input[name="HomeScore"]');
+        const awayScore = document.querySelector('input[name="AwayScore"]');
+        const totalGoals = document.querySelector('input[name="TotalGoals"]');
+
+        function calcTotal() {
+            let home = parseInt(homeScore.value) || 0;
+            let away = parseInt(awayScore.value) || 0;
+            totalGoals.value = home + away;
+        }
+
+        homeScore.addEventListener('input', calcTotal);
+        awayScore.addEventListener('input', calcTotal);
+    });
+</script>

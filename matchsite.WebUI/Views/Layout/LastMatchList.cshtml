@@ -1,0 +1,98 @@
+﻿@model List<matchsite.WebUI.Dtos.MatchDto.ResultMatchDto>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+    @await Component.InvokeAsync("_LayoutHeadComponentPartial")
+<body>
+    @await Component.InvokeAsync("_LayoutNavbarComponentPartial")
+
+    <main>
+        <div class="wrap" style="padding-top:28px;padding-bottom:56px">
+            <div class="container">
+
+                <div class="sec-ttl mb-4 fw-bold text-uppercase tracking-wider text-light d-flex align-items-center" style="font-size: 16px; opacity: 0.9; letter-spacing: 0.5px;">
+                    ⚽ &nbsp; Son Haftanın Sonuçları (Son 10 Maç)
+                </div>
+
+                <div class="mc-wrap mcw d-flex flex-column gap-3">
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var match in Model)
+                        {
+                            <a href="/Layout/MatchDetail/@match.MatchId" class="mc-custom-card d-flex align-items-center justify-content-between p-3 text-decoration-none transition-all"
+                               style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; backdrop-filter: blur(10px); transition: transform 0.2s, background 0.2s;">
+
+                                <div class="d-flex flex-column align-items-center justify-content-center pe-3 border-end" style="border-color: rgba(255,255,255,0.08) !important; min-width: 90px;">
+                                    <div class="fw-bold text-white-50" style="font-size: 13px;">@match.MatchDate.ToString("dd MMM")</div>
+                                    <div class="badge bg-success-subtle text-success border border-success-subtle mt-1 px-2 py-0.5" style="font-size: 9px; font-weight: 700; letter-spacing: 0.5px;">MS</div>
+                                </div>
+
+                                <div class="flex-grow-1 px-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="d-flex align-items-center justify-content-center p-1 square-logo-wrap-lm">
+                                                <img src="@match.HomeTeamLogo" alt="@match.HomeTeamName" onerror="this.src='https://placehold.co/24x24?text=⚽';" style="width:22px; height:22px; object-fit:contain;" />
+                                            </div>
+                                            <span class="text-white fw-medium" style="font-size: 14px;">@match.HomeTeamName</span>
+                                        </div>
+                                        <span class="fw-bold text-success" style="font-size: 16px;">@match.HomeScore</span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="d-flex align-items-center justify-content-center p-1 square-logo-wrap-lm">
+                                                <img src="@match.AwayTeamLogo" alt="@match.AwayTeamName" onerror="this.src='https://placehold.co/24x24?text=⚽';" style="width:22px; height:22px; object-fit:contain;" />
+                                            </div>
+                                            <span class="text-white fw-medium" style="font-size: 14px;">@match.AwayTeamName</span>
+                                        </div>
+                                        <span class="fw-bold text-success" style="font-size: 16px;">@match.AwayScore</span>
+                                    </div>
+                                </div>
+
+                                <div class="det-arrow-lm text-info transition-all" style="opacity: 0.5; padding-left: 10px;">
+                                    <i class="bi bi-chevron-right" style="font-size: 18px;"></i>
+                                </div>
+
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center p-5 text-white-50 rounded border" style="background: rgba(255,255,255,0.01); border-color: rgba(255,255,255,0.06) !important; font-size: 14px;">
+                            Sistemde henüz tamamlanmış bir maç sonucu bulunmuyor.
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    @await Component.InvokeAsync("_LayoutFooterComponentPartial")
+</body>
+</html>
+
+<style>
+    /* Kare Logo Tasarımı */
+    .square-logo-wrap-lm {
+        width: 32px;
+        height: 32px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 6px;
+    }
+
+    /* Kart Hover Efekti */
+    .mc-custom-card:hover {
+        background: rgba(255, 255, 255, 0.04) !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+        transform: translateY(-1px);
+    }
+
+        .mc-custom-card:hover .det-arrow-lm {
+            opacity: 1 !important;
+            transform: translateX(3px);
+        }
+</style>

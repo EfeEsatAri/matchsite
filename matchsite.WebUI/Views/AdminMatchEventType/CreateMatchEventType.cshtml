@@ -1,0 +1,133 @@
+﻿@model CreateMatchEventTypeDto
+@{
+    ViewData["Title"] = "Yeni Etkinlik Türü Ekle";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<style>
+    .matchmind-form-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+        color: #333;
+        max-width: 600px;
+    }
+
+    .matchmind-form-header {
+        margin-bottom: 25px;
+    }
+
+        .matchmind-form-header h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #111;
+        }
+
+    .mm-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid #e0e0e0;
+        padding: 25px;
+    }
+
+    .mm-form-group {
+        margin-bottom: 20px;
+    }
+
+        .mm-form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+            font-size: 14px;
+        }
+
+    .mm-form-control {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: border-color 0.2s;
+    }
+
+        .mm-form-control:focus {
+            border-color: #0f5132;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.1);
+        }
+    /* Renk Seçiciye Özel Ufak Dokunuş */
+    .mm-form-color {
+        height: 45px;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .mm-btn-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .mm-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+    }
+
+    .mm-btn-submit {
+        background-color: #0f5132;
+        color: white;
+    }
+
+        .mm-btn-submit:hover {
+            background-color: #0b3d25;
+        }
+
+    .mm-btn-cancel {
+        background-color: #e2e3e5;
+        color: #333;
+    }
+
+        .mm-btn-cancel:hover {
+            background-color: #d3d4d5;
+        }
+</style>
+
+<div class="matchmind-form-container">
+    <div class="matchmind-form-header">
+        <h3>Yeni Maç Etkinlik Türü Ekle</h3>
+    </div>
+
+    <div class="mm-card">
+        <form  method="post">
+
+            <div class="mm-form-group">
+                <label for="Name">Etkinlik Türü Adı</label>
+                <input type="text" id="Name" name="Name" class="mm-form-control" placeholder="Örn: Gol, Sarı Kart, Kırmızı Kart, Değişiklik" required />
+            </div>
+
+            <div class="mm-form-group">
+                <label for="Color">Temsili Renk</label>
+                <input type="color" id="Color" name="Color" class="mm-form-control mm-form-color" value="#0f5132" required />
+            </div>
+
+            <div class="mm-form-group">
+                <label for="IconUrl">İkon URL veya Sınıfı</label>
+                <input type="text" id="IconUrl" name="IconUrl" class="mm-form-control" placeholder="Örn: gol-ikonu.png veya fa-soccer-ball" />
+            </div>
+
+            <div class="mm-btn-group">
+                <a href="/AdminMatchEventType/Index" class="mm-btn mm-btn-cancel">İptal</a>
+                <button type="submit" class="mm-btn mm-btn-submit">Etkinlik Türünü Kaydet</button>
+            </div>
+
+        </form>
+    </div>
+</div>

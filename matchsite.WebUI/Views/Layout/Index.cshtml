@@ -1,0 +1,28 @@
+﻿@{
+    Layout=null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+    @await Component.InvokeAsync("_LayoutHeadComponentPartial")
+<body>
+    <!-- NAVBAR -->
+    @await Component.InvokeAsync("_LayoutNavbarComponentPartial")
+
+    <!-- LEAGUE HEADER -->
+    @await Component.InvokeAsync("_LayoutLegaueHeaderComponentPartial")
+
+    <!-- MAIN -->
+    <main>
+        <div class="wrap" style="padding-top:28px;padding-bottom:56px">
+            <!-- FEATURED -->
+            @await Component.InvokeAsync("_LayoutFeatureComponentPartial")
+            <!-- ════ FINISHED ════ -->
+            @await Component.InvokeAsync("_LayoutFinishedComponentPartial")
+            <!-- ════ UPCOMING ════ -->
+            @await Component.InvokeAsync("_LayoutUpcomingComponentPartial")
+        </div>
+    </main>
+    <!-- FOOTER -->
+    @await Component.InvokeAsync("_LayoutFooterComponentPartial")
+</body>
+</html>
