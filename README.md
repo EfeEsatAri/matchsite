@@ -70,7 +70,7 @@ Proje, kurumsal ölçeklenebilirlik kuralları (Clean Architecture / N-Layer) di
 
 * **Backend:** `.NET 7.0 Core Web API` & `ASP.NET Core MVC`
 * **Veri Tabanı ve ORM:** `Microsoft SQL Server` & `Entity Framework Core`
-* **Veri Güvenliği & Dönüşüm:** `DTO (Data Transfer Objects)` kullanımı ile güvenli veri taşıma ve `AutoMapper` entegrasyonu.
+* **Veri Güvenliği & Dönüşüm:** `DTO (Data Transfer Objects)` kullanımı ile güvenli veri taşıma.
 * **İlişkisel Veri Modeli:** `Teams`, `Players`, `Matches`, `Standings` ve `MatchEvents` tabloları arasında Foreign Key kısıtlamaları ve performanslı `Include` (Eager Loading) sorguları.
 * **Frontend UI:** `HTML5`, `CSS3 (Custom Properties / Flexbox & Grid)`, `Bootstrap`, `JavaScript`
 
